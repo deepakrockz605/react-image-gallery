@@ -28,6 +28,11 @@ class Landing extends Component {
     const userLink = (
       <ul className="navbar-nav">
         <li className="nav-item">
+          <Link to="/dashboard" className="nav-link">
+            Dashboard
+          </Link>
+        </li>
+        <li className="nav-item">
           <span onClick={this.logOut.bind(this)} className="nav-link">
             Logout
           </span>

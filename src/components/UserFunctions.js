@@ -22,7 +22,6 @@ export const login = user => {
       password: user.password
     })
     .then(response => {
-      console.log(response.data)
       localStorage.setItem('usertoken', response.data)
       return response.data
     })
@@ -34,7 +33,6 @@ export const login = user => {
 export const getProfile = user => {
   return axios
     .get('users/profile', {
-      //headers: { Authorization: ` ${this.getToken()}` }
     })
     .then(response => {
       console.log(response)
