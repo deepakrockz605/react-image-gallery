@@ -60,7 +60,7 @@ class Landing extends Component {
               </Link>
             </li>
           </ul>
-          {localStorage.usertoken ? userLink : loginRegLink}
+          {localStorage.jwt ? userLink : loginRegLink}
         </div>
       </nav>
     )

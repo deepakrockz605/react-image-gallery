@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { register } from "./UserFunctions";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
+import Loader from 'react-loader-spinner'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 class Register extends Component {
   constructor() {
@@ -12,6 +14,7 @@ class Register extends Component {
       username: "",
       email: "",
       password: "",
+      isLoader: false
     };
   }
 
@@ -59,11 +62,20 @@ class Register extends Component {
           email: state.email,
           password: state.password,
         };
+        this.setState({
+          isLoader : true
+        })
         register(newUser).then((res) => {
           if (!res.error) {
+            this.setState({
+              isLoader : false
+            })
             this.props.history.push(`/login`);
             toastr.success("Signup Succesful !!");
           } else {
+            this.setState({
+              isLoader : false
+            })
             toastr.error(res.error);
           }
         });
@@ -74,6 +86,18 @@ class Register extends Component {
   render() {
     return (
       <div className="container">
+        {this.state.isLoader ? (
+          <>
+            <div className="loader"></div>
+            <Loader
+              className="innerSpinner"
+              type="Bars"
+              color="#00BFFF"
+              height={100}
+              width={100}
+            />
+          </>
+        ) : null}
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmit}>

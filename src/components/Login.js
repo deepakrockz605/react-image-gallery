@@ -3,6 +3,8 @@ import { login } from "./UserFunctions";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import { loginUtil } from '../utils';
+import Loader from 'react-loader-spinner'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 class Login extends Component {
   constructor() {
@@ -11,6 +13,7 @@ class Login extends Component {
       username: "",
       email: "",
       password: "",
+      isLoader: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -35,12 +38,16 @@ class Login extends Component {
         password: this.state.password,
       };
 
+      this.setState({ isLoader: true })
       login(user).then((res) => {
         if (!res.error) {
           loginUtil();
+          this.setState({ isLoader: false })
           this.props.history.push(`/dashboard`);
           toastr.success("Logged In Succesful !!");
+          
         } else {
+          this.setState({ isLoader: false })
           toastr.error(res.error);
         }
       });
@@ -50,6 +57,18 @@ class Login extends Component {
   render() {
     return (
       <div className="container Login">
+        {this.state.isLoader ? (
+          <>
+            <div className="loader"></div>
+            <Loader
+              className="innerSpinner"
+              type="Bars"
+              color="#00BFFF"
+              height={100}
+              width={100}
+            />
+          </>
+        ) : null}
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmit}>
